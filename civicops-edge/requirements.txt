@@ -1,0 +1,22 @@
+# CivicOps Edge - Phase 1
+#
+# ON THE PI: create the venv WITH system packages so apt-installed picamera2,
+# libcamera and lgpio are visible:
+#   sudo apt install -y python3-picamera2 python3-lgpio python3-venv
+#   python3 -m venv --system-site-packages .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# picamera2 is intentionally NOT pip-installed: its libcamera bindings only
+# come from apt (python3-picamera2). pip installing it inside a venv breaks.
+
+opencv-python-headless>=4.8
+numpy>=1.24,<3
+ultralytics>=8.1          # YOLOv8 + NCNN/ONNX runtime loading
+ncnn>=1.0.20240410        # NCNN backend for the exported model
+gpiozero>=2.0             # HC-SR04 (uses lgpio pin factory on Pi OS Bookworm+)
+smbus2>=0.4               # MPU-6050 over I2C
+pyserial>=3.5             # NEO-6M over UART
+requests>=2.31            # telemetry POST
+
+# dev / tests
+pytest>=7.4

@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+output/
+calibration/
+received_events.jsonl
+model/*.pt
+model/*.onnx
+model/*_ncnn_model/

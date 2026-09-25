@@ -1,0 +1,26 @@
+# Autostart the edge daemon on boot.
+# Install (on the Pi, adjust User/paths if your username isn't "civicai"):
+#   sudo cp deploy/civicops-edge.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now civicops-edge
+#   journalctl -u civicops-edge -f        # live logs
+[Unit]
+Description=CivicOps Edge sensing daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=civicai
+WorkingDirectory=/home/civicai/civicops-edge
+Environment=PYTHONUNBUFFERED=1
+# Environment=TELEMETRY_URL=http://192.168.1.50:8000/events
+ExecStart=/home/civicai/civicops-edge/.venv/bin/python main.py
+Restart=on-failure
+RestartSec=5
+# SIGTERM triggers the same graceful shutdown as Ctrl+C
+KillSignal=SIGTERM
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target
